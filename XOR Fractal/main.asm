@@ -1,0 +1,110 @@
+;XOR FRACTAL TUTORIAL
+;
+;IF YOU WANT TO USE THIS CODE OR MODIFY IT IN YOUR PROGRAM
+;CREDIT ME EXPLICITLY!!!
+
+[BITS    16]
+[ORG 0x7C00]
+
+WSCREEN equ 320
+HSCREEN equ 200
+
+call setup
+call pattern
+
+setup:
+        ;Mode 13h (VGA 256 COLORS)
+        mov ah, 0x00
+        mov al, 0x13
+        int 0x10
+
+        ;Setup Video Segment in ES
+        push 0xA000
+        pop es
+
+        ;Setup Registers
+        mov ah, 0x0C
+        xor al, al ;AL = COLOR
+        xor bx, bx ;BX = PAGE
+        xor cx, cx ;CX = X POSITION
+        xor dx, dx ;DX = Y POSITION
+		
+;-------------------------------------------
+reset:
+        ;Start all over again
+        xor cx, cx
+        xor dx, dx
+
+        ;ITERATION++
+        dec word [iteration]
+
+        pattern:
+            jmp calcpixel
+
+            setpixel:
+                cmp cx, WSCREEN
+                jae nextline
+
+                cmp dx, HSCREEN
+                jae reset
+
+                int 0x10
+
+                inc cx
+
+                jmp pattern
+                ret
+		
+calcpixel:
+        ;X AND Y
+        mov bx, cx
+        and bx, dx
+
+        ;AL = X ^ Y
+        mov al, bl
+        add al, [iteration]
+
+        ;Zoom it 4x
+        shr al, 2
+
+
+
+        jmp color
+		
+;-------------------------------------------
+
+color:
+        ;IF AL > 55 --> SUBTRACT 16
+        cmp al, 55
+        ja subcolor
+
+        ;IF AL < 32 --> ADD 32
+        cmp al, 32
+        jb addcolor
+
+        jmp setpixel
+		
+subcolor:
+        sub al, 16
+        jmp color
+		
+addcolor:
+        add al, 32
+        jmp color
+
+;-------------------------------------------
+		
+nextline:
+        xor cx, cx
+        inc dx
+
+        jmp pattern
+		
+;-------------------------------------------
+
+;INT ITERATION = 0
+iteration dw 1000
+		
+;MBR Signature
+times 510 - ($ - $$) db 0
+dw 0xAA55
