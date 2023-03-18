@@ -32,6 +32,7 @@ setup:
         xor dx, dx ;DX = Y POSITION
 		
 ;-------------------------------------------
+
 reset:
         ;Start all over again
         xor cx, cx
