@@ -1,0 +1,4 @@
+INT 10h Functions: https://drive.google.com/file/d/1J5M5CIix2kYfdZU2MPDh8jEV4sU3eIUa/view
+VGA Color Palettes: https://www.fountainware.com/EXPL/vga_color_palettes.htm
+
+Mode 13h: https://en.wikipedia.org/wiki/Mode_13h 
