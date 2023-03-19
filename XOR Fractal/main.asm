@@ -15,7 +15,7 @@ call setup
 call pattern
 
 setup:
-        ;Mode 13h (VGA 256 COLORS)
+        ;Setup Mode 13h (VGA 256 COLORS)
         mov ah, 0x00
         mov al, 0x13
         int 0x10
@@ -51,10 +51,13 @@ reset:
                 cmp dx, HSCREEN
                 jae reset
 
+		;Plot the pixel
                 int 0x10
 
+		;Go to next pixel
                 inc cx
 
+		;Calculate the actual pixel
                 jmp pattern
                 ret
 		
@@ -69,8 +72,6 @@ calcpixel:
 
         ;Zoom it 4x
         shr al, 2
-
-
 
         jmp color
 		
