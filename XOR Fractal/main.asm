@@ -31,6 +31,7 @@ setup:
         xor cx, cx ;CX = X POSITION
         xor dx, dx ;DX = Y POSITION
 		
+	ret	
 ;-------------------------------------------
 
 reset:
