@@ -63,9 +63,9 @@ reset:
                 ret
 		
 calcpixel:
-        ;X AND Y
+        ;X XOR Y
         mov bx, cx
-        and bx, dx
+        xor bx, dx
 
         ;AL = X ^ Y
         mov al, bl
