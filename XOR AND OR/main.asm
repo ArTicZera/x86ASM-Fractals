@@ -87,6 +87,7 @@ color:
         cmp al, 32
         jb addcolor
 
+	;ELSE --> SET PIXEL
         jmp setpixel
 		
 subcolor:
