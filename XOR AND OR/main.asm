@@ -40,7 +40,7 @@ reset:
         xor dx, dx
 
         ;ITERATION++
-        dec word [iteration]
+        inc word [iteration]
 
         pattern:
             jmp calcpixel
@@ -109,7 +109,7 @@ nextline:
 ;-------------------------------------------
 
 ;INT ITERATION = 0
-iteration dw 1000
+iteration: dw 0
 		
 ;MBR Signature
 times 510 - ($ - $$) db 0
